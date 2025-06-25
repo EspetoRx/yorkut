@@ -10,8 +10,10 @@ RUN apt-get update && apt-get install -y \
     libzip-dev && \
     docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Enable Apache Rewrite module
-RUN a2enmod rewrite
+# Enable SSL module, configure Apache for PHP support, and enable our SSL site configuration
+RUN a2enmod rewrite \
+    ssl \
+    headers
 
 # Configure Apache DocumentRoot to point to Laravel's public directory
 # and update Apache configuration files
@@ -45,3 +47,5 @@ RUN chmod -R 755 /var/www/html/storage
 RUN chmod -R 755 /var/www/html/bootstrap/cache
 
 USER $user
+
+EXPOSE 80
