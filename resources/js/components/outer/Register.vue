@@ -1,11 +1,11 @@
 <template>
-    <div class="bg-color w-100 vh-100">
+    <div class="bg-color w-100 min-height-vh100 pb-2">
         <div class="container-fluid ps-0 pe-0">
             <HeaderTopNavbar></HeaderTopNavbar>
             <div class="container bg-white rounded-1 mt-2">
                 <div class="d-flew flex-row w-100">
-                    <Form :validation-schema="schema" v-slot="{errors}">
-                        <div class="fs-3 d-flex flex-inline">Boas vindas ao <div class="ms-1">yorkut!</div>
+                    <Form :validation-schema="schema" v-slot="{errors, validate}">
+                        <div class="fs-3 d-flex flex-inline">Boas vindas ao <div class="ms-1 navbar-title-2">yorkut!</div>
                         </div>
                         <div>Só precisamos confirmar algumas coisas antes de você começar a usar o yorkut.</div>
                         <div
@@ -97,6 +97,7 @@
                                         v-model="field.value"
                                         v-bind="field"
                                         @close="validate()"
+                                        :class="(errors.country)?'is-invalid':''"
                                         >
 
                                         <template v-slot:noResult>
@@ -125,6 +126,19 @@
                             </div>
                             <ErrorMessage name="terms" class="d-flex flex-row invalid-feedback"></ErrorMessage>
                         </div>
+                        <div class="mt-1 blue-background-register rounded p-2 mb-2">
+                            <div class="d-flex flex-inline w-100 align-items-center justify-content-center">
+                                <Field name="captcha" v-slot="{ validate }" v-model="captchaAcceptance">
+                                    <vue-hcaptcha :sitekey="hCaptchaKey" :language="'pt'" @verify="(token, eKey) => {markCaptchaAsVerified(token, eKey); validate()}" :size="'normal'"></vue-hcaptcha>
+                                </Field>
+                            </div>
+                            <ErrorMessage name="captcha" class="d-flex flex-row invalid-feedback"></ErrorMessage>
+                        </div>
+                        <div class="mt-1 p-2 mb-2">
+                            <div class="d-flex flex-inline w-100 align-items-center justify-content-center">
+                                <button class="btn bt-sm btn-outline-primary" :disabled="captchaAcceptance == null">Tudo certo, pode criar a minha conta</button>
+                            </div>
+                        </div>
                     </Form>
                 </div>
             </div>
@@ -140,6 +154,7 @@
     import Multiselect from 'vue-multiselect';
     import Paises from './../../../assets/json/paises-gentilicos-google-maps.json';
     import HeaderTopNavbar from './helpers.vue/HeaderTopNavbar.vue';
+    import VueHcaptcha from '@hcaptcha/vue3-hcaptcha';
     import * as yup from 'yup';
     import 'vue-multiselect/dist/vue-multiselect.min.css';
 
@@ -149,7 +164,8 @@
             Field,
             Form,
             Multiselect,
-            HeaderTopNavbar
+            HeaderTopNavbar,
+            VueHcaptcha
         },
         setup(props, ctx) {
             yup.setLocale(pt);
@@ -190,15 +206,25 @@
                             .required("O seu país é obrigatório."),
                 terms: yup.boolean()
                           .required("Os termos de aceite são obrigatórios.")
-                          .oneOf([true],'Você deve aceitar os termos para participar do Yorkut.')
+                          .oneOf([true],'Você deve aceitar os termos para participar do Yorkut.'),
+                captcha: yup.object({
+                                token: yup.string()
+                                          .required("Token não retornado."),
+                                eKey: yup.string()
+                                         .required("eKey não retornada.")
+                            })
+                            .required("É obrigatório completar o desafio.")
             });
 
             return {
                 chosenCountry: ref(null),
+                hCaptchaKey: import.meta.env.VITE_H_CAPTCHA_SITE_KEY,
+                hCaptchaSecret: import.meta.env.VITE_H_CAPTCHA_SITE_SECRET,
                 maxDate: formatedDate,
                 minDate: formatedMinDate,
                 paises: Paises,
                 schema: schema,
+                captchaAcceptance: ref(null),
             }
         },
         methods: {
@@ -207,6 +233,10 @@
             },
             submitForm() {
                 alert(JSON.stringify(values, null, 2));
+            },
+            markCaptchaAsVerified(token, eKey) {
+                console.log("Marked acceptance as verified:", token, eKey);
+                this.captchaAcceptance = ref({token: token, eKey: eKey});
             }
         },
     }
