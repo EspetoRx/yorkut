@@ -1,0 +1,78 @@
+#version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        user: lucas_oliveira
+        uid: 1000
+    container_name: yorkut_app
+    ports:
+      - "8000:80"
+      - "8001:443"
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/node_modules # Prevent overwriting node_modules
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=yorkut
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - VITE_HOST=0.0.0.0
+    networks:
+      - default
+
+  db:
+    image: mysql:8.0
+    container_name: yorkut_db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: yorkut
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # Optional: Vue.js 3 Dev Server
+  frontend:
+    image: node:20
+    container_name: yorkut_frontend
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - /node_modules
+    command: sh -c "npm install && npm run dev"
+    environment:
+      - HOST=0.0.0.0
+    ports:
+      - "5173:5173"
+    networks:
+      - default
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: yorkut_pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+
+volumes:
+  db_data:
+
+networks:
+  default:
+    driver: bridge

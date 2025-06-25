@@ -1,0 +1,117 @@
+// Variables
+@use 'variables' as *;
+@use 'medidas' as *;
+
+// Bootstrap
+@use 'bootstrap/scss/bootstrap' as *;
+
+@import '@fortawesome/fontawesome-free/css/fontawesome.css';
+@import '@fortawesome/fontawesome-free/css/regular.css';
+@import '@fortawesome/fontawesome-free/css/solid.css';
+@import '@fortawesome/fontawesome-free/css/brands.css';
+
+$home-background-color: #D4DDEE !important;
+$yorkut-color: #FF2094 !important;
+$secondary-color: #E7EFFA;
+$copyright-footer-color: #BDCCE9 !important;
+$blue-register: #DDEDFF !important;
+
+.bg-color {
+    background-color: $home-background-color;
+}
+
+@font-face {
+    font-family: 'ITC Ronda Regular';
+    font-style: 'normal';
+    font-weight: '700';
+    src: url('../fonts/ITC\ Ronda\ Regular.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/ITC\ Ronda\ Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/ITC\ Ronda\ Regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/ITC\ Ronda\ Regular.woff') format('woff'), /* Pretty Modern Browsers */
+         url('../fonts/ITC\ Ronda\ Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/ITC\ Ronda\ Regular.svg#ITCRondaRegular') format('svg'); /* Legacy iOS */
+}
+
+.logo {
+    font-family: 'ITC Ronda Regular', 'Arial';
+    font-size: 85px;
+    color: $yorkut-color;
+}
+
+.beta-position {
+    top: 35% !important;
+}
+
+.text-gray-color {
+    color: $gray-600;
+    font-size: $font-size-sm !important;
+}
+
+.text-highlight {
+    color: $yorkut-color;
+    
+}
+
+.login-block {
+    background-color: $secondary-color;
+    border: 2px solid white;
+}
+
+.copyright-footer {
+    background-color: $copyright-footer-color;
+}
+
+.margin-top-2-75rem {
+    margin-top: 2.75rem;
+}
+
+.navbar-title {
+    font-family: 'ITC Ronda Regular', 'Arial';
+    font-size: 25px;
+    color: $yorkut-color;
+    text-decoration: none;
+}
+
+.beta-size-coloring-config {
+    color: $gray-600;
+    font-size: 6px;
+}
+
+.blue-background-register {
+    background-color: $blue-register;
+}
+
+// MULTISELECT
+.multiselect__tags {
+    font-size: 1rem !important;
+}
+
+@include media-breakpoint-up(sm) {
+    .w-xs-100 {
+        width: 100% !important;
+    }
+}
+@include media-breakpoint-up(md) { 
+    .text-gray-color {
+        color: $gray-600;
+        font-size: $font-size-base !important;
+    }
+    .w-xs-100 {
+        width: 75% !important;
+    }
+}
+@include media-breakpoint-up(lg) { 
+    .w-xs-100 {
+        width: 50% !important;
+    }
+}
+@include media-breakpoint-up(xl) { 
+    .w-xs-100 {
+        width: 40% !important;
+    } 
+}
+@include media-breakpoint-up(xxl) { 
+    .w-xs-100 {
+        width: 35% !important;
+    } 
+}
