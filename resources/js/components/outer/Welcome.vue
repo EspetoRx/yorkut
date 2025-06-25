@@ -30,7 +30,7 @@
                         </div>
                         <div class="w-xs-100">
                             <div class="w-100 login-block pt-2 pb-2">
-                                <div class="text-gray-color text-center">Acesse o Yorkut com a sua conta</div>
+                                <div class="text-gray-color text-center">Acesse o <span class="navbar-title-2">yorkut</span> com a sua conta</div>
                                 <div class="w-100 mt-3 ps-2 pe-2">
                                     <div class="row mt-1">
                                         <div class="col-3 pt-2 text-end">

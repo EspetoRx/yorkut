@@ -65,9 +65,19 @@ $blue-register: #DDEDFF !important;
     margin-top: 2.75rem;
 }
 
+.min-height-vh100 {
+    min-height: 100vh;
+}
+
 .navbar-title {
     font-family: 'ITC Ronda Regular', 'Arial';
     font-size: 25px;
+    color: $yorkut-color;
+    text-decoration: none;
+}
+
+.navbar-title-2 {
+    font-family: 'ITC Ronda Regular', 'Arial';
     color: $yorkut-color;
     text-decoration: none;
 }
@@ -85,6 +95,10 @@ $blue-register: #DDEDFF !important;
 .multiselect__tags {
     font-size: 1rem !important;
 }
+
+.multiselect.is-invalid .multiselect__tags {
+    border: 1px solid #f86c6b !important;
+  }
 
 @include media-breakpoint-up(sm) {
     .w-xs-100 {
