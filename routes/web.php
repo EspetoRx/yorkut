@@ -12,4 +12,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/{any}', function () {
     return view('welcome'); // Blade view where Vue app is mounted
-})->where('any', '.*');
+})->where('any', '^(?!api).*$');
