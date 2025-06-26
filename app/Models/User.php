@@ -3,14 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasUuids, HasFactory, Notifiable, SoftDeletes, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +22,17 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'accept_terms',
+        'birthdate',
+        'country',
         'name',
         'email',
+        'email_verified_at',
+        'hcaptcha_token',
+        'hcaptcha_ekey',
         'password',
+        'sex',
+        'sirname',
     ];
 
     /**
@@ -29,6 +41,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
+        'hcaptcha_token',
+        'hcaptcha_ekey',
         'password',
         'remember_token',
     ];
