@@ -20,7 +20,7 @@ class RegistrationRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public static function rules(): array
     {
         return [
             'email' => 'required|email|unique:users,email',
@@ -38,7 +38,7 @@ class RegistrationRequest extends FormRequest
             'terms' => 'required|boolean',
             'captcha' => 'required',
             'captcha.token' => 'required|string',
-            'captcha.eKey' => 'required|numeric'
+            'captcha.eKey' => 'required|string'
         ];
     }
 }

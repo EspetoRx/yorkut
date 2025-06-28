@@ -334,8 +334,9 @@
                         Swal.showLoading();
                     }
                 });
-                axios.post('/api/register', values)
+                axios.post('/register', values)
                     .then((resp) => {
+                        console.log(resp);
                         Swal.fire({
                             title: 'Pronto!',
                             text: 'Agora você já pode fazer Login.',
