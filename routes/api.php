@@ -7,4 +7,4 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 })->middleware('auth:sanctum');
  */
-Route::post('register', [\App\Http\Controllers\Api\RegistrationController::class, 'store']);
+//Route::post('register', [\App\Http\Controllers\Api\RegistrationController::class, 'store']);
